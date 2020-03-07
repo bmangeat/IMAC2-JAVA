@@ -1,6 +1,7 @@
 package fr.umlv.fight;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class Robot {
     private int _lifePoint;
@@ -36,12 +37,27 @@ public class Robot {
      */
     public void fire(Robot targetRobot){
         if (!isDead()){
-            targetRobot.set_lifePoint(targetRobot.get_lifePoint() - 2);
-            System.out.println(targetRobot + "a été touché par le " + get_name());
+            if (rollDice()){
+                try {
+                    targetRobot.set_lifePoint(targetRobot.get_lifePoint() - 2);
+                } catch (IllegalStateException e){
+                    System.out.println("Exception : " + e);
+                }
+                System.out.println(targetRobot + " a été touché par le " + get_name());
+            }
         } else {
             System.out.println("Hého ! Vous ne pouvez pas tirer sur un mort !");
         }
     }
+
+    /**
+     * Probability can shot. We can redefine this method on the children
+     * @return boolean Probability's shot
+     */
+    protected boolean rollDice(){
+        return true;
+    }
+
 
     /**
      * De
